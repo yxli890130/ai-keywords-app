@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自动上传到GitHub</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #FAF8F3 0%, #F5F2ED 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #C83030;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .token-input {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+    }
+    .token-input label {
+      display: block;
+      font-weight: 600;
+      color: #2C4C6E;
+      margin-bottom: 10px;
+    }
+    .token-input input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: 'Courier New', monospace;
+    }
+    .btn {
+      width: 100%;
+      background: #C83030;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 50px;
+      font-size: 1.1em;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .btn:hover { background: #B02828; }
+    .btn:disabled { background: #ccc; cursor: not-allowed; }
+    .progress {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      margin-bottom: 20px;
+    }
+    .progress-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .progress-item:last-child { border-bottom: none; }
+    .status {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .status.pending { background: #eee; color: #999; }
+    .status.uploading { background: #E89F3C; color: white; }
+    .status.success { background: #6B9B4A; color: white; }
+    .status.error { background: #C83030; color: white; }
+    .filename { flex: 1; }
+    .success-box {
+      background: #D4EDDA;
+      border-left: 4px solid #6B9B4A;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      display: none;
+    }
+    .code {
+      background: #2C4C6E;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      margin-top: 10px;
+    }
+    .note {
+      background: #E8F4FD;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 自动上传到 GitHub</h1>
+    <p class="subtitle">一键上传所有文件并启用 Pages</p>
+
+    <div class="token-input">
+      <label>📋 粘贴你的 GitHub Token：</label>
+      <input type="password" id="token" placeholder="ghp_xxxxxxxxxxxx" />
+      <button class="btn" onclick="startUpload()" id="uploadBtn">
+        开始上传所有文件 →
+      </button>
+    </div>
+
+    <div class="note">
+      <strong>💡 Token</strong> 将用于自动上传，不会保存到服务器
+    </div>
+
+    <div class="progress" id="progressArea" style="display: none;">
+      <h3 style="margin-bottom: 15px; color: #2C4C6E;">上传进度</h3>
+      <div id="progressList"></div>
+    </div>
+
+    <div class="success-box" id="successBox">
+      <h3 style="color: #6B9B4A;">✅ 上传完成！</h3>
+      <p>所有文件已成功上传到 GitHub</p>
+      <p><strong>正在启用 GitHub Pages...</strong></p>
+      <div id="pagesResult"></div>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px; color: #999;">
+      <p>❤️ 用心创作 · 用AI描绘美好世界</p>
+    </div>
+  </div>
+
+  <script>
+    const files = [
+      'index.html',
+      'manifest.json',
+      'service-worker.js',
+      'browserconfig.xml',
+      'README.md',
+      'install.html',
+      'deploy.html',
+      'QUICK_START.md',
+      'generate-icons.html',
+      'icon-generator.html',
+      'token-guide.html',
+      'upload-guide.html'
+    ];
+
+    const username = 'yxli890130';
+    const repo = 'ai-keywords-app';
+
+    async function uploadFile(token, filename) {
+      const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/${filename}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: 'Initial commit',
+          content: await readFileAsBase64(filename)
+        })
+      });
+      return response.json();
+    }
+
+    function readFileAsBase64(filename) {
+      return fetch(filename)
+        .then(r => r.arrayBuffer())
+        .then(buffer => {
+          const binary = new Uint8Array(buffer);
+          let base64 = '';
+          for (let i = 0; i < binary.length; i++) {
+            base64 += String.fromCharCode(binary[i]);
+          }
+          return btoa(base64);
+        });
+    }
+
+    async function enablePages(token) {
+      const response = await fetch(`https://api.github.com/repos/${username}/${repo}/pages`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          source: {
+            branch: 'main',
+            path: '/'
+          }
+        })
+      });
+      return response.json();
+    }
+
+    function updateProgress(filename, status) {
+      const list = document.getElementById('progressList');
+      let item = document.getElementById(`file-${filename}`);
+
+      if (!item) {
+        item = document.createElement('div');
+        item.id = `file-${filename}`;
+        item.className = 'progress-item';
+        item.innerHTML = `
+          <span class="status ${status}">${getStatusIcon(status)}</span>
+          <span class="filename">${filename}</span>
+        `;
+        list.appendChild(item);
+      } else {
+        const statusEl = item.querySelector('.status');
+        statusEl.className = `status ${status}`;
+        statusEl.textContent = getStatusIcon(status);
+      }
+    }
+
+    function getStatusIcon(status) {
+      switch(status) {
+        case 'pending': return '○';
+        case 'uploading': return '●';
+        case 'success': return '✓';
+        case 'error': return '✗';
+        default: return '○';
+      }
+    }
+
+    async function startUpload() {
+      const token = document.getElementById('token').value.trim();
+      const btn = document.getElementById('uploadBtn');
+      const progressArea = document.getElementById('progressArea');
+      const progressList = document.getElementById('progressList');
+      const successBox = document.getElementById('successBox');
+
+      if (!token) {
+        alert('请先粘贴你的 GitHub Token');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '上传中...';
+      progressArea.style.display = 'block';
+      progressList.innerHTML = '';
+      successBox.style.display = 'none';
+
+      let successCount = 0;
+      let errorCount = 0;
+
+      for (const file of files) {
+        updateProgress(file, 'uploading');
+
+        try {
+          const result = await uploadFile(token, file);
+          if (result.content) {
+            updateProgress(file, 'success');
+            successCount++;
+          } else {
+            updateProgress(file, 'error');
+            errorCount++;
+            console.error(`${file} 上传失败:`, result);
+          }
+        } catch (error) {
+          updateProgress(file, 'error');
+          errorCount++;
+          console.error(`${file} 上传出错:`, error);
+        }
+
+        await new Promise(r => setTimeout(r, 500));
+      }
+
+      btn.textContent = '上传完成';
+      progressArea.style.display = 'none';
+
+      if (successCount === files.length) {
+        successBox.style.display = 'block';
+
+        // 启用 Pages
+        document.getElementById('pagesResult').innerHTML = '<p>正在启用 Pages...</p>';
+
+        try {
+          const pagesResult = await enablePages(token);
+          if (pagesResult.status === 'created') {
+            document.getElementById('pagesResult').innerHTML = `
+              <p>✅ GitHub Pages 已启用！</p>
+              <div class="code">
+                <strong>你的应用链接：</strong><br>
+                https://${username}.github.io/${repo}/
+              </div>
+              <p style="margin-top: 15px;">
+                <strong>2-3分钟后</strong>即可访问！
+                通过微信发送给家人使用。
+              </p>
+            `;
+          } else {
+            document.getElementById('pagesResult').innerHTML = `
+              <p>⚠️ Pages 启用可能需要手动操作：</p>
+              <a href="https://github.com/${username}/${repo}/settings/pages" target="_blank" style="color: #C83030;">
+                点击这里手动启用 Pages →
+              </a>
+            `;
+          }
+        } catch (error) {
+          document.getElementById('pagesResult').innerHTML = `
+            <p>⚠️ Pages 启用失败，请手动操作：</p>
+            <a href="https://github.com/${username}/${repo}/settings/pages" target="_blank" style="color: #C83030;">
+              点击这里手动启用 Pages →
+            </a>
+          `;
+        }
+      } else {
+        alert(`部分文件上传失败：成功 ${successCount}，失败 ${errorCount}`);
+        btn.disabled = false;
+        btn.textContent = '重试';
+      }
+    }
+
+    // 预填充token（如果之前保存过）
+    window.onload = function() {
+      const savedToken = localStorage.getItem('github_token');
+      if (savedToken) {
+        document.getElementById('token').value = savedToken;
+      }
+    };
+
+    // 保存token
+    document.getElementById('token').addEventListener('change', function() {
+      localStorage.setItem('github_token', this.value);
+    });
+  </script>
+</body>
+</html>

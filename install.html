@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加到主屏幕 - AI绘画关键词宝库</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #FAF8F3 0%, #F5F2ED 100%);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #C83030 0%, #A02020 100%);
+      border-radius: 22px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(200, 48, 48, 0.3);
+    }
+
+    .icon svg {
+      width: 60px;
+      height: 60px;
+    }
+
+    h1 {
+      color: #C83030;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 1.1em;
+    }
+
+    .step-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: #C83030;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .step-title {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #2C4C6E;
+      margin-bottom: 15px;
+    }
+
+    .step-content {
+      color: #555;
+      line-height: 1.8;
+    }
+
+    .step-content img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin: 10px 0;
+      border: 1px solid #eee;
+    }
+
+    .highlight {
+      background: #FFF3CD;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .arrow {
+      text-align: center;
+      font-size: 2em;
+      color: #C83030;
+      margin: 10px 0;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 177.78%; /* 9:16 aspect ratio for iPhone */
+      height: 0;
+      background: #f0f0f0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .video-placeholder {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 1.2em;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #C83030;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #B02828;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(200, 48, 48, 0.4);
+    }
+
+    .btn-secondary {
+      background: #2C4C6E;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #1A2C3E;
+    }
+
+    .tip-box {
+      background: #E8F4FD;
+      border-left: 4px solid #2C4C6E;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+
+    .tip-box strong {
+      color: #2C4C6E;
+    }
+
+    .ios-badge {
+      display: inline-block;
+      background: #000;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 5px;
+      font-size: 0.9em;
+      margin-left: 10px;
+    }
+
+    .emoji {
+      font-size: 1.5em;
+      margin-right: 5px;
+    }
+
+    @media (max-width: 480px) {
+      .button-group {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="50" cy="60" rx="35" ry="30" fill="white" opacity="0.95"/>
+          <circle cx="35" cy="55" r="6" fill="#C83030"/>
+          <circle cx="50" cy="65" r="6" fill="#2C4C6E"/>
+          <circle cx="65" cy="55" r="6" fill="#E89F3C"/>
+          <circle cx="40" cy="75" r="4" fill="#6B9B4A"/>
+          <circle cx="60" cy="78" r="4" fill="#9B59B6"/>
+          <path d="M 75 35 Q 80 30 85 35 L 90 40 Q 95 45 90 50 L 65 75 Q 60 80 55 75 L 50 70 Q 45 65 50 60 Z"
+                fill="#8B4513" stroke="#5D3A1A" stroke-width="1"/>
+          <text x="50" y="25" text-anchor="middle" font-size="10" fill="white" font-weight="bold">AI</text>
+        </svg>
+      </div>
+      <h1>添加到主屏幕</h1>
+      <p class="subtitle">把 AI绘画关键词宝库 安装到你的iPhone</p>
+    </div>
+
+    <!-- iOS Safari 安装步骤 -->
+    <div class="step-card">
+      <div class="step-title">
+        <span class="step-number">1</span>
+        确认使用Safari浏览器 <span class="ios-badge">Safari</span>
+      </div>
+      <div class="step-content">
+        <p>📍 请确保你在iPhone自带的<span class="highlight">Safari浏览器</span>中打开此页面。</p>
+        <p style="margin-top: 10px;">如果是在微信中打开，请点击右上角 <strong>···</strong> → 选择<span class="highlight">在浏览器中打开</span></p>
+      </div>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="step-card">
+      <div class="step-title">
+        <span class="step-number">2</span>
+        点击分享按钮
+      </div>
+      <div class="step-content">
+        <p>📍 点击Safari浏览器底部的<span class="highlight">分享按钮</span>（一个方框加向上箭头的图标）</p>
+        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin-top: 15px; text-align: center;">
+          <div style="font-size: 3em;">⬆️</div>
+          <div style="color: #999; margin-top: 10px;">类似这样的图标</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="step-card">
+      <div class="step-title">
+        <span class="step-number">3</span>
+        找到并点击"添加到主屏幕"
+      </div>
+      <div class="step-content">
+        <p>📍 在弹出的菜单中，向下滚动，找到<span class="highlight">"添加到主屏幕"</span>选项并点击</p>
+        <p style="margin-top: 10px; color: #666;">💡 提示：图标通常是一个手机加加号的形状 📱+</p>
+      </div>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="step-card">
+      <div class="step-title">
+        <span class="step-number">4</span>
+        点击"添加"完成安装
+      </div>
+      <div class="step-content">
+        <p>📍 在弹出的预览界面中，点击右上角的<span class="highlight">"添加"</span>按钮</p>
+        <p style="margin-top: 10px; color: #666;">✅ 完成后，返回主屏幕就能看到应用图标了！</p>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 使用提示</strong>
+      <p style="margin-top: 10px;">
+        安装后，你可以像使用普通App一样打开和使用，无需再通过浏览器访问！
+        所有功能都可以离线使用。
+      </p>
+    </div>
+
+    <div class="button-group">
+      <a href="index.html" class="btn btn-primary">
+        <span class="emoji">🎨</span> 返回应用
+      </a>
+      <button onclick="window.close()" class="btn btn-secondary">
+        <span class="emoji">✖️</span> 关闭
+      </button>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; color: #999; font-size: 0.9em;">
+      <p>如有问题，请联系分享者获取帮助</p>
+      <p style="margin-top: 10px;">❤️ 用心创作 · 用AI描绘美好世界</p>
+    </div>
+  </div>
+
+  <script>
+    // 检测是否在Safari中
+    const isUA = (str) => navigator.userAgent.includes(str);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+    if (!isIOS) {
+      document.body.innerHTML = `
+        <div style="max-width: 500px; margin: 50px auto; padding: 30px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); text-align: center;">
+          <div style="font-size: 4em; margin-bottom: 20px;">📱</div>
+          <h2 style="color: #C83030; margin-bottom: 15px;">请在iPhone上操作</h2>
+          <p style="color: #666; line-height: 1.8;">
+            此安装指南仅适用于iPhone的Safari浏览器。<br><br>
+            请使用iPhone扫描链接或在Safari中打开。
+          </p>
+          <a href="index.html" style="display: inline-block; margin-top: 20px; padding: 12px 30px; background: #2C4C6E; color: white; text-decoration: none; border-radius: 50px;">
+            返回应用
+          </a>
+        </div>
+      `;
+    } else if (!isSafari) {
+      document.body.innerHTML = `
+        <div style="max-width: 500px; margin: 50px auto; padding: 30px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); text-align: center;">
+          <div style="font-size: 4em; margin-bottom: 20px;">🧭</div>
+          <h2 style="color: #C83030; margin-bottom: 15px;">请在Safari中打开</h2>
+          <p style="color: #666; line-height: 1.8;">
+            添加到主屏幕功能需要使用Safari浏览器。<br><br>
+            请点击右上角的菜单，选择"在Safari中打开"
+          </p>
+        </div>
+      `;
+    }
+
+    // 检测是否已安装
+    if (window.navigator.standalone === true) {
+      document.querySelector('.container').innerHTML = `
+        <div style="text-align: center; padding: 60px 20px;">
+          <div style="font-size: 5em; margin-bottom: 20px;">✅</div>
+          <h1 style="color: #6B9B4A; margin-bottom: 15px;">已成功安装！</h1>
+          <p style="color: #666; font-size: 1.2em; margin-bottom: 30px;">
+            AI绘画关键词宝库已经添加到你的主屏幕
+          </p>
+          <a href="index.html" style="display: inline-block; padding: 15px 40px; background: #C83030; color: white; text-decoration: none; border-radius: 50px; font-size: 1.1em;">
+            开始使用 🎨
+          </a>
+          <p style="margin-top: 40px; color: #999;">
+            现在可以像使用普通App一样使用这个应用了！
+          </p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

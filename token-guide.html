@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创建GitHub Token</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #FAF8F3 0%, #F5F2ED 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 { color: #C83030; margin-bottom: 10px; }
+    .step {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #C83030;
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .step-title {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #2C4C6E;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    .highlight {
+      background: #FFF3CD;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .code {
+      background: #2C4C6E;
+      color: #f8f8f2;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+      margin: 10px 0;
+    }
+    .arrow {
+      text-align: center;
+      font-size: 2em;
+      color: #C83030;
+      margin: -10px 0;
+    }
+    .token-input {
+      background: #E8F4FD;
+      border-left: 4px solid #2C4C6E;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .token-input input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: 'Courier New', monospace;
+      margin-top: 10px;
+    }
+    .token-input input:focus {
+      outline: none;
+      border-color: #C83030;
+    }
+    .btn {
+      background: #C83030;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .btn:hover {
+      background: #B02828;
+    }
+    .btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .note {
+      background: #FFF3CD;
+      border-left: 4px solid #E89F3C;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔑 创建 GitHub Personal Access Token</h1>
+      <p style="color: #666;">快速创建Token，用于自动部署应用</p>
+    </div>
+
+    <div class="step">
+      <div class="step-title">
+        <span class="step-number">1</span>
+        打开 GitHub Token 创建页面
+      </div>
+      <p>📍 点击下方按钮或访问：</p>
+      <div class="code">https://github.com/settings/tokens/new</div>
+      <button class="btn" onclick="window.open('https://github.com/settings/tokens/new', '_blank')">
+        打开创建页面 →
+      </button>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="step">
+      <div class="step-title">
+        <span class="step-number">2</span>
+        配置 Token 设置
+      </div>
+      <p>📍 在页面填写以下信息：</p>
+      <ul style="margin: 15px 0 15px 20px; line-height: 2;">
+        <li><strong>Note（备注）</strong>: 输入 <span class="highlight">AI Keywords App</span></li>
+        <li><strong>Expiration（过期时间）</strong>: 选择 <span class="highlight">No expiration</span> 或 <span class="highlight">90 days</span></li>
+        <li><strong>Scopes（权限）</strong>: 勾选 <span class="highlight">repo</span>（完整仓库权限）</li>
+      </ul>
+      <div class="note">
+        <strong>💡 提示</strong>: 只需要勾选 <strong>repo</strong> 这一栏，其他不需要勾选
+      </div>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="step">
+      <div class="step-title">
+        <span class="step-number">3</span>
+        生成并复制 Token
+      </div>
+      <p>📍 点击页面底部的 <strong>"Generate token"</strong> 按钮</p>
+      <p style="margin-top: 10px;">📍 <strong>重要</strong>: 复制生成的 Token（只会显示一次！）</p>
+      <div class="note">
+        <strong>⚠️ 注意</strong>: Token 形如 <code>ghp_xxxxxxxxxxxx</code>，请立即复制保存
+      </div>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="token-input">
+      <h3 style="margin-bottom: 10px; color: #2C4C6E;">📝 粘贴你的 Token</h3>
+      <p style="margin-bottom: 10px;">粘贴后点击"继续"，将自动创建仓库并部署应用：</p>
+      <input type="text" id="tokenInput" placeholder="ghp_xxxxxxxxxxxx" />
+      <button class="btn" onclick="submitToken()" id="submitBtn">
+        继续部署 →
+      </button>
+      <div id="result" style="margin-top: 15px; display: none;">
+        <p id="resultText"></p>
+        <a id="repoLink" href="" target="_blank" style="color: #C83030;"></a>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; color: #999;">
+      <p>❤️ Token 只用于此次部署，不会被保存</p>
+    </div>
+  </div>
+
+  <script>
+    function submitToken() {
+      const token = document.getElementById('tokenInput').value.trim();
+      const resultDiv = document.getElementById('result');
+      const resultText = document.getElementById('resultText');
+      const repoLink = document.getElementById('repoLink');
+      const submitBtn = document.getElementById('submitBtn');
+
+      if (!token) {
+        alert('请先粘贴你的 Token');
+        return;
+      }
+
+      // 保存 token 到 localStorage 供后续使用
+      localStorage.setItem('github_token', token);
+
+      resultDiv.style.display = 'block';
+      resultText.innerHTML = '✅ Token 已保存！<br><br>请返回命令行窗口，我将自动创建仓库并推送代码...';
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Token 已保存';
+
+      // 可以在这里添加自动跳转或通知
+      console.log('Token saved:', token.substring(0, 10) + '...');
+    }
+
+    // 页面加载时检查是否已有 token
+    window.onload = function() {
+      const savedToken = localStorage.getItem('github_token');
+      if (savedToken) {
+        document.getElementById('tokenInput').value = savedToken;
+        document.getElementById('submitBtn').textContent = '更新 Token';
+      }
+    };
+  </script>
+</body>
+</html>

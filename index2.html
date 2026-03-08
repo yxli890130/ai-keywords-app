@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>AI绘画关键词宝库</title>
+
+  <!-- PWA Meta Tags -->
+  <meta name="description" content="甄选33类·数百个优质AI绘画关键词，一键生成、复制、分享">
+  <meta name="theme-color" content="#C83030">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AI关键词">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="AI绘画关键词宝库">
+  <meta name="msapplication-TileColor" content="#C83030">
+  <meta name="msapplication-config" content="./browserconfig.xml">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="./manifest.json">
+  <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./icons/icon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./icons/icon-16x16.png">
+  <link rel="shortcut icon" href="./favicon.ico">
+
+  <!-- iOS 启动画面 -->
+  <link rel="apple-touch-startup-image" href="./splash/iphone5_splash.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="./splash/iphone6_splash.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+  <link rel="apple-touch-startup-image" href="./splash/iphoneplus_splash.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="./splash/iphonex_splash.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+  <link rel="apple-touch-startup-image" href="./splash/ipad_splash.png" media="(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)">
+
+  <style>
+    /* ========== 全局样式 ========== */
+    :root {
+      /* 新中式配色 */
+      --bg-primary: #FAF8F3;
+      --bg-secondary: #F5F2ED;
+      --accent-red: #C83030;
+      --accent-blue: #2C4C6E;
+      --ink-black: #1A1A1A;
+      --ink-gray: #666666;
+      --ink-light: #999999;
+      --border-color: rgba(26, 26, 26, 0.08);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+      /* 字号 */
+      --font-small: 16px;
+      --font-medium: 18px;
+      --font-large: 22px;
+      --font-xlarge: 28px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      color: var(--ink-black);
+      min-height: 100vh;
+      line-height: 1.6;
+      font-size: var(--font-medium);
+    }
+
+    /* ========== 标题区域 ========== */
+    .header {
+      text-align: center;
+      padding: 40px 20px 30px;
+      position: relative;
+    }
+
+    .header-decoration {
+      display: inline-block;
+      position: relative;
+      padding: 30px 60px;
+    }
+
+    .header-decoration::before,
+    .header-decoration::after {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--accent-red), transparent);
+    }
+
+    .header-decoration::before {
+      left: 20px;
+    }
+
+    .header-decoration::after {
+      right: 20px;
+    }
+
+    .header-title {
+      font-family: "Noto Serif SC", "Source Han Serif SC", "STSong", "SimSun", serif;
+      font-size: 2.5em;
+      font-weight: 600;
+      color: var(--ink-black);
+      letter-spacing: 0.3em;
+      margin-bottom: 10px;
+    }
+
+    .header-subtitle {
+      font-size: 0.9em;
+      color: var(--ink-gray);
+      letter-spacing: 0.5em;
+    }
+
+    .header-dots {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .header-dots span {
+      width: 8px;
+      height: 8px;
+      background: var(--accent-red);
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+
+    /* ========== 控制栏 ========== */
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-label {
+      font-size: 0.9em;
+      color: var(--ink-gray);
+    }
+
+    /* 风格模板选择器 */
+    .template-select {
+      padding: 10px 20px;
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      background: white;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      appearance: none;
+      padding-right: 40px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 15px center;
+    }
+
+    .template-select:hover {
+      border-color: var(--accent-red);
+      box-shadow: 0 2px 10px rgba(200, 48, 48, 0.1);
+    }
+
+    .template-select:focus {
+      outline: none;
+      border-color: var(--accent-red);
+    }
+
+    /* 字号调节按钮 */
+    .font-size-buttons {
+      display: flex;
+      background: white;
+      border-radius: 50px;
+      padding: 5px;
+      border: 1px solid var(--border-color);
+    }
+
+    .font-size-btn {
+      padding: 8px 16px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      border-radius: 50px;
+      font-size: 0.9em;
+      color: var(--ink-gray);
+      transition: all 0.3s ease;
+    }
+
+    .font-size-btn:hover {
+      background: var(--bg-secondary);
+    }
+
+    .font-size-btn.active {
+      background: var(--accent-red);
+      color: white;
+    }
+
+    /* ========== 提示词区域 ========== */
+    .prompt-section {
+      max-width: 800px;
+      margin: 0 auto 30px;
+      padding: 0 20px;
+    }
+
+    .prompt-box {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .prompt-box::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-red), var(--accent-blue));
+    }
+
+    .prompt-label {
+      font-size: 0.9em;
+      color: var(--ink-gray);
+      margin-bottom: 10px;
+    }
+
+    .prompt-content {
+      min-height: 60px;
+      padding: 15px;
+      background: var(--bg-primary);
+      border-radius: 12px;
+      font-size: 1em;
+      line-height: 1.8;
+      color: var(--ink-black);
+      word-break: break-all;
+    }
+
+    .prompt-content.empty {
+      color: var(--ink-light);
+      font-style: italic;
+    }
+
+    .prompt-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.95em;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      background: var(--accent-red);
+      color: white;
+      box-shadow: 0 4px 15px rgba(200, 48, 48, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: #B02828;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200, 48, 48, 0.4);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--ink-black);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-secondary);
+      border-color: var(--accent-red);
+    }
+
+    .btn-danger {
+      background: white;
+      color: var(--accent-red);
+      border: 1px solid rgba(200, 48, 48, 0.3);
+    }
+
+    .btn-danger:hover {
+      background: rgba(200, 48, 48, 0.1);
+    }
+
+    /* ========== 卡片网格 ========== */
+    .categories-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+    }
+
+    .category-card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(44, 76, 110, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--accent-blue);
+    }
+
+    .category-card:hover::before {
+      opacity: 1;
+      animation: ink-spread 0.6s ease-out;
+    }
+
+    @keyframes ink-spread {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    .category-icon {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .category-name {
+      font-size: 1em;
+      font-weight: 600;
+      color: var(--ink-black);
+      margin-bottom: 5px;
+    }
+
+    .category-count {
+      font-size: 0.85em;
+      color: var(--ink-light);
+    }
+
+    /* 水墨装饰线 */
+    .category-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-red), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .category-card:hover::after {
+      opacity: 1;
+    }
+
+    /* ========== 弹出窗口 ========== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .modal-content {
+      background: #FAF8F3;
+      border-radius: 20px;
+      max-width: 900px;
+      width: 100%;
+      max-height: 85vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      position: relative;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      padding: 25px 30px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      position: relative;
+    }
+
+    .modal-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-red), var(--accent-blue));
+    }
+
+    .modal-title {
+      font-size: 1.4em;
+      font-weight: 600;
+      color: var(--ink-black);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .modal-close {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: var(--bg-secondary);
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5em;
+      color: var(--ink-gray);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: var(--accent-red);
+      color: white;
+      transform: rotate(90deg);
+    }
+
+    .modal-body {
+      padding: 30px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .keywords-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .keywords-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .keyword-item {
+      padding: 12px 16px;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      font-size: 0.95em;
+      user-select: none;
+    }
+
+    .keyword-item:hover {
+      border-color: var(--accent-blue);
+      background: rgba(44, 76, 110, 0.05);
+      transform: scale(1.05);
+    }
+
+    .keyword-item.selected {
+      background: var(--accent-blue);
+      color: white;
+      border-color: var(--accent-blue);
+    }
+
+    .modal-footer {
+      padding: 20px 30px;
+      border-top: 1px solid var(--border-color);
+      background: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .selected-count {
+      font-size: 0.9em;
+      color: var(--ink-gray);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* ========== 复制成功提示 ========== */
+    .toast {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: var(--accent-blue);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 50px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      z-index: 2000;
+      transition: transform 0.4s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ========== 页脚 ========== */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--ink-light);
+      font-size: 0.85em;
+    }
+
+    /* ========== 滚动条样式 ========== */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-blue);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-red);
+    }
+  </style>
+</head>
+<body>
+  <!-- 标题区域 -->
+  <header class="header">
+    <div class="header-decoration">
+      <h1 class="header-title">AI绘画关键词宝库</h1>
+      <p class="header-subtitle">甄选33类 · 数百个优质关键词</p>
+    </div>
+    <div class="header-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- 控制栏 -->
+  <div class="controls">
+    <div class="control-group">
+      <span class="control-label">🖼️ 风格模板</span>
+      <select class="template-select" id="templateSelect">
+        <option value="">自由选择</option>
+        <option value="ink">🖌️ 水墨中国风</option>
+        <option value="festival">🏮 传统节日</option>
+        <option value="beauty">🌸 古风美人</option>
+        <option value="modern">🎨 现代简约</option>
+        <option value="anime">🎌 日系动漫</option>
+        <option value="cyber">🚀 赛博朋克</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <span class="control-label">🔤 字号</span>
+      <div class="font-size-buttons">
+        <button class="font-size-btn" data-size="small">小</button>
+        <button class="font-size-btn active" data-size="medium">中</button>
+        <button class="font-size-btn" data-size="large">大</button>
+        <button class="font-size-btn" data-size="xlarge">超大</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 提示词区域 -->
+  <div class="prompt-section">
+    <div class="prompt-box">
+      <div class="prompt-label">📝 我的提示词</div>
+      <div class="prompt-content empty" id="promptContent">点击下方卡片选择关键词，或使用风格模板快速生成...</div>
+      <div class="prompt-actions">
+        <button class="btn btn-primary" id="copyBtn">
+          📋 一键复制
+        </button>
+        <button class="btn btn-secondary" id="randomBtn">
+          🎲 随机生成
+        </button>
+        <button class="btn btn-danger" id="clearBtn">
+          🗑️ 清空
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 分类卡片 -->
+  <div class="categories-container">
+    <div class="categories-grid" id="categoriesGrid">
+      <!-- 卡片由JavaScript生成 -->
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <p>用心创作 · 用AI描绘美好世界</p>
+  </footer>
+
+  <!-- 弹出窗口 -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">📷 图片质量</h2>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="keywords-grid" id="keywordsGrid">
+          <!-- 关键词由JavaScript生成 -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <span class="selected-count" id="selectedCount">已选择 0 个</span>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="selectAllBtn">全选</button>
+          <button class="btn btn-primary" id="addToPromptBtn">添加到提示词</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 复制成功提示 -->
+  <div class="toast" id="toast">
+    ✓ 已复制到剪贴板
+  </div>
+
+  <script>
+    // ========== 关键词数据 ==========
+    const categoriesData = {
+      "图片质量": ["4K高清", "8K超清", "超真实", "摄影图片", "细节", "虚幻引擎", "OC渲染器", "现实主义的", "epic游戏质感", "3D渲染", "35mm镜头", "电影感", "徕卡镜头", "高清", "超现实的", "场景设计(适合建筑、风景等）", "壁纸", "错综复杂的细节", "商业摄影", "也可以换成其他相机型m", "高动态范围", "微距摄影", "RAW格式", "大光圈", "景深", "超广角"],
+      "艺术风格": ["传统", "哥特式", "日本浮世绘风格", "中国国画", "油画", "现实主义", "黑暗风格", "水彩", "浪漫主义", "文艺复兴风格", "古典主义", "学院派", "写实主义", "日式风格", "巴洛克式", "民间艺术", "水墨画", "古埃及", "手稿", "学院主义", "愁苦主义"],
+      "灯光效果": ["摄影棚灯光", "暗房", "霓虹，赛博朋克风格必备", "极好的灯光", "会使毛发发光", "电影质感的灯光", "背后照明", "体积光", "柔和的灯", "边缘照明，效果很不错", "镜头光晕", "背景是光点", "自然灯光", "漫射光", "深色", "光线", "美丽的光", "盏悬挂的灯", "摄影师灯光", "侧光", "逆光", "顶光", "伦勃朗光", "蝴蝶光", "轮廓光", "环境光", "强光", "柔光", "戏剧光", "冷光", "暖光"],
+      "色调调性": ["色调，前面加颜色", "彩色的", "鲜艳的颜色", "怀旧的", "明亮色", "高对比", "高饱和", "朱红", "粉红", "梅红", "玫瑰红", "石榴红", "莲红", "浅莲红", "辣椒红", "高梁红", "砖红色", "猩红色", "柠檬黄", "青色", "绿色", "蓝色", "紫色", "橙色", "金色", "银色", "青铜色", "棕色", "灰色", "黑色", "白色", "米色", "卡其色", "薄荷绿", "珊瑚色", "桃色", "薰衣草色", "靛蓝", "蓝绿色", "琥珀色", "奶油色", "橄榄绿", "酒红色", "紫红色", "天蓝色", "海蓝色", "玫瑰金色", "古铜色", "铂金色", "珠光色", "荧光色", "渐变色", "单色", "双色", "三色", "彩虹色", "柔和色调", "鲜艳色调", "复古色调", "暖色调", "冷色调", "中性色调", "大地色系", "莫兰迪色系", "马卡龙色系", "粉彩系", "深色系", "浅色系", "金属色系"],
+      "自然现象": ["黑色烟雾，也可换成其他色", "柔和的秀", "云朵", "膨胀的云", "引人注目的云", "暴风雨", "暴风雨的海面", "海洋背景", "闪电", "落日", "日出", "彩虹", "薄雾", "雾", "自然风景", "光环", "瀑布", "冰河", "阴暗的天", "深渊", "旋转的尘埃", "雨", "雪", "风", "星星", "月亮", "太阳"],
+      "视角构图": ["突出画面主体", "背景虚化", "肖像，大头照", "正视图", "顶视图", "第三人称视角", "卫星视角", "景深", "第一人称视角", "无人机视角", "锐利的焦点", "鱼眼镜头", "运动相机风格", "黑色背景，也可以换为其他颜色", "全身视角", "微距摄影", "有机会出现16:9的画幅", "对", "广角镜头", "过肩画面（镜头）", "宽", "宽松画面", "紧缩画面", "散景", "前景", "背景", "中景", "近景", "特写", "大特写", "远景", "平视", "仰视", "俯视", "侧视", "七分法构图", "三分法构图", "黄金分割构图", "对称构图", "对角线构图", "框架构图"],
+      "材质质感": ["纸质", "木质", "灰色水泥", "大理石", "金", "银", "铜", "泡沫", "塑料", "金属质感", "粘土人，这个表述可以做手办", "宝石", "水晶", "雕塑", "壁画", "镶嵌", "拉丝金属", "甲", "甲", "镌空", "错综复杂的细节", "玻璃", "陶瓷", "布料", "皮革", "毛皮", "羽毛", "木头", "石头", "金属", "塑料", "橡胶", "丝绸", "天鹅绒", "蕾丝", "牛仔布", "亚麻", "羊毛", "棉花", "雪纺", "缎子", "天鹅绒", "皮革", "漆皮", "金属光泽", "珠光", "哑光", "光泽", "粗糙", "光滑", "柔软", "坚硬", "弹性", "厚重", "轻盈", "透明", "半透明", "不透明"],
+      "场景描述": ["反乌托邦", "幻想", "现实主义", "超现实主义", "超写实主义", "废墟", "城市", "废弃城市建筑群", "近未来都市", "街景", "宇宙", "雨景", "在晨雾中", "黑暗地牢", "炼金室", "疯狂麦克斯沙地风格", "星云", "室内", "室外", "海滩", "山脉", "森林", "沙漠", "草原", "田野", "花园", "公园", "广场", "街道", "建筑", "房间", "客厅", "卧室", "厨房", "浴室", "办公室", "教室", "图书馆", "咖啡厅", "餐厅", "酒店", "商场", "博物馆", "画廊", "剧院", "电影院", "机场", "火车站", "港口", "码头", "桥梁", "道路", "小径", "小路", "小巷", "胡同", "弄堂", "庭院", "阳台", "屋顶", "天台", "地下室", "车库", "仓库", "工厂", "作坊", "工作室", "实验室", "医院", "学校", "教堂", "寺庙", "宫殿", "城堡", "堡垒", "塔楼", "灯塔", "小屋", "别墅", "庄园", "农舍", "帐篷", "营房", "兵营", "监狱", "地牢", "洞穴", "地洞", "矿井", "采石场", "油田", "风电场", "太阳能发电站", "水坝", "运河", "河流", "湖泊", "池塘", "水池", "喷泉", "瀑布", "冰川", "雪山", "火山", "沙漠", "戈壁", "荒原", "沼泽", "湿地", "森林", "树林", "竹林", "草原", "草地", "花海", "麦田", "稻田", "茶园", "果园", "菜园", "花园", "公园", "庭院", "阳台", "屋顶花园"],
+      "其他形容词": ["禁欲的", "优雅的", "美学的", "梦幻、空幻的", "狂热梦想", "奇怪的", "另一个领域", "非世俗的", "既视感，似曾相识的幻觉记忆", "构想的", "巨大的", "有氛围感的", "神圣幻想，适合生成神圣人物", "可爱的", "清晰的", "神秘"],
+      "珠宝专题": ["有氛围感的", "绿宝石", "雕刻", "金绿石", "刚玉", "翡翠", "青金石", "镂空", "错综复杂的细节", "宝石", "高清", "钻石", "镶嵌", "红宝石", "蓝宝石", "祖母绿", "珍珠", "玛瑙", "珊瑚", "琥珀", "玉髓", "碧玉", "孔雀石", "绿松石", "青金石", "紫水晶", "黄水晶", "托帕石", "橄榄石", "石榴石", "锆石", "欧泊", "月光石", "日光石", "拉长石", "黑曜石", "虎眼石", "猫眼石"],
+      "动漫漫画": ["漫画", "二次元文化", "插画", "动作镜头", "日本漫画风格", "动画风格", "樱", "动", "吉卜力风格", "梦工厂动画风格", "皮克斯动画风格", "童话故事书插图风格", "90年代电视游戏", "日本海报风格", "包浩斯", "复古风, 1960's", "黑白电影时期", "古典风，18-19世纪", "乡村风格", "乡村", "抽象风", "古典风", "传统风", "现代风", "当代风", "未来风", "科幻风", "奇幻风", "神话风", "历史风", "古风", "民国风", "港台风", "韩流风", "日系风", "欧美风", "中国风", "东南亚风", "印度风", "阿拉伯风", "非洲风", "拉丁风", "波西米亚风", "哥特风", "朋克风", "嘻哈风", "街头风", "学院风", "职场风", "休闲风", "运动风", "度假风", "度假", "派对风", "晚礼服", "正装", "休闲装", "运动装", "家居服", "睡衣", "泳装", "内衣", "婚纱", "礼服", "制服", "工作服", "演出服", "舞蹈服", "武术服", "运动服", "瑜伽服", "健身服", "跑步服", "滑雪服", "潜水服", "登山服", "露营装备", "钓鱼装备", "骑行装备", "摄影装备", "绘画装备", "音乐装备", "游戏装备", "电脑装备", "手机装备", "平板装备", "耳机装备", "音箱装备", "键盘装备", "鼠标装备", "显示器装备", "打印机装备", "扫描仪装备", "投影仪装备", "电视装备", "空调装备", "冰箱装备", "洗衣机装备", "烘干机装备", "洗碗机装备", "烤箱装备", "微波炉装备", "电饭煲装备", "豆浆机装备", "榨汁机装备", "搅拌机装备", "咖啡机装备", "茶具装备", "酒具装备", "餐具装备", "厨具装备", "锅具装备", "刀具装备", "砧板装备", "碗盘装备", "杯子装备", "盘子装备", "碗具装备", "筷子装备", "勺子装备", "叉子装备", "刀具装备", "剪刀装备", "开瓶器装备", "打蛋器装备", "搅拌器装备", "量杯装备", "量勺装备", "计时器装备", "温度计装备", "秤装备", "漏斗装备", "过滤器装备", "研磨器装备", "切片器装备", "削皮器装备", "去核器装备", "压汁器装备", "榨汁器装备", "打蛋器装备"],
+      "科幻专题": ["运动镜头", "假肢", "爆炸", "尾田荣一郎，自己搜几个日本漫画家的名字", "外骨骼盔甲", "元宇宙", "高达", "露虹", "赛博朋克", "机械感", "未来主义", "激光", "霓虹灯", "全息投影", "虚拟现实", "增强现实", "机器人", "人工智能", "无人机", "飞船", "太空站", "星球", "银河", "宇宙", "时间旅行", "平行宇宙", "量子物理", "核能", "太阳能", "风能", "水能", "地热能", "生物质能", "燃料电池", "电池", "电容器", "电感器", "电阻器", "二极管", "三极管", "集成电路", "微处理器", "存储器", "硬盘", "固态硬盘", "U盘", "存储卡", "云存储", "网络存储", "服务器", "主机", "终端", "显示器", "键盘", "鼠标", "打印机", "扫描仪", "投影仪", "数码相机", "数码摄像机", "手机", "平板电脑", "笔记本电脑", "台式电脑", "工作站", "服务器", "大型机", "超级计算机", "量子计算机", "神经网络", "深度学习", "机器学习", "人工智能", "虚拟现实", "增强现实", "混合现实", "区块链", "加密货币", "比特币", "以太坊", "NFT", "元宇宙", "Web3", "去中心化", "智能合约", "分布式存储", "云计算", "边缘计算", "雾计算", "物联网", "工业4.0", "智能制造", "智能工厂", "智能城市", "智能家居", "智能汽车", "智能交通", "智能医疗", "智能教育", "智能金融", "智能零售", "智能物流", "智能农业", "智能能源", "智能环保", "智能安防", "智能监控", "智能识别", "智能语音", "智能图像", "智能视频", "智能推荐", "智能搜索", "智能翻译", "智能助手", "智能机器人", "智能家居", "智能穿戴", "智能健康", "智能运动", "智能娱乐", "智能游戏", "智能音乐", "智能视频", "智能阅读", "智能写作", "智能绘画", "智能设计", "智能创作", "智能编程", "智能办公", "智能学习", "智能生活"],
+      "画风流派": ["统一创作", "东方山水画", "浮世绘", "时尚风格", "90年代电视游戏", "日本海报风格", "包浩斯", "复古风, 1960's", "黑白电影时期", "古典风，18-19世纪", "乡村风格", "乡村", "抽象风", "印象派", "表现主义", "立体主义", "超现实主义", "达达主义", "波普艺术", "欧普艺术", "极简主义", "概念艺术", "装置艺术", "行为艺术", "大地艺术", "视频艺术", "数字艺术", "网络艺术", "媒体艺术", "声音艺术", "光影艺术", "身体艺术", "大地艺术", "环境艺术", "生态艺术", "社会艺术", "政治艺术", "女权主义艺术", "后现代艺术", "当代艺术", "现代艺术", "前卫艺术", "先锋艺术", "实验艺术", "独立艺术", "地下艺术", "街头艺术", "涂鸦艺术", "漫画艺术", "动画艺术", "游戏艺术", "电影艺术", "摄影艺术", "设计艺术", "工艺艺术", "民间艺术", "原始艺术", "部落艺术", "土著艺术", "东方艺术", "西方艺术", "中东艺术", "非洲艺术", "拉丁美洲艺术", "大洋洲艺术", "南极洲艺术"],
+      "镜头类型": ["电影镜头", "对焦", "广角镜头", "特写", "近景", "中景", "全景", "大远景", "过肩画面（镜头）", "宽松画面", "紧缩画面", "空镜", "散景", "前景", "背景", "深景", "浅景"],
+      "人物镜头": ["大特写", "脸部特写", "头部以上", "颈部以上", "胸部以上", "腰部以上", "膝盖以上", "全身", "人在远方", "人占 3/4", "二人、三人及群体画面"],
+      "中国神兽": ["白虎", "神话中的乌龟", "中国的神明", "灯龙", "啸天犬", "凤", "狐狸精，九尾狐", "石狮子", "龙", "金", "精卫", "座", "麒麟", "天池水怪", "月免", "山海经", "神兽", "蚩尤", "年兽", "饕餮", "穷奇", "混沌", "梼杌", "朱雀", "玄武", "青龙", "白泽", "毕方", "重明鸟", "赤鱬", "当康", "夫诸", "鲲鹏", "貔貅", "狻猊", "狴犴", "睚眦", "赑屃", "椒图", "囚牛", "蒲牢"],
+      "十二生肖": ["鼠", "牛", "虎", "兔", "龙", "蛇", "马", "羊", "猴", "鸡", "狗", "猪"],
+      "传统节日": ["儿童节", "除夕", "重阳节", "端午节", "元宵节", "中秋节", "国庆节", "春节", "教师节", "清明节", "泼水节", "妇女节", "五四青年节", "劳动节", "建党节", "建军节", "圣诞节", "万圣节", "感恩节", "情人节"],
+      "传统饮食": ["冰糖葫芦", "北京烤鸭", "盒饭", "粉丝", "贴", "火锅", "豆脑", "莲藕", "米粉", "米豆腐", "春卷", "花卷", "馄饨", "元宵", "月饼", "粽子", "饺子", "包子", "馒头", "面条", "米饭", "粥", "豆浆", "油条", "烧饼", "煎饼", "汤圆", "年糕", "腊八粥", "腊八蒜", "腊肉", "香肠", "酱菜", "泡菜", "榨菜", "腐乳", "臭豆腐", "毛豆腐", "螺蛳粉", "米线", "过桥米线", "桂林米粉", "螺蛳粉", "桂林米粉", "柳州螺蛳粉", "南宁老友粉", "梧州龟苓膏", "北海虾饼", "防城卷粉", "钦州猪脚粉", "贵港莲藕", "玉林牛巴", "百色芒果", "贺州黄姚豆豉", "河池切粉", "来宾红薯", "崇左酸粥"],
+      "中国文化": ["《红楼梦》", "全景画面，长卷轴", "针灸", "天坛", "无我", "常", "扶贫工程", "世外桃源", "京九铁路", "京剧", "骨法(描述国画的神韵）", "青铜鼎", "书法", "混法", "动", "武术", "水墨画", "工笔画", "写意画", "山水画", "花鸟画", "人物画", "敦煌壁画", "石窟艺术", "陶瓷艺术", "青铜器", "玉器", "丝绸", "茶叶", "中医", "中药", "针灸", "推拿", "气功", "太极", "武术", "京剧", "昆曲", "豫剧", "越剧", "黄梅戏", "评剧", "粤剧", "川剧", "秦腔", "河北梆子", "皮影戏", "木偶戏", "杂技", "相声", "评书", "快板", "数来宝", "山东快书", "京东大鼓", "京韵大鼓", "梅花大鼓", "乐亭大鼓", "北京琴书", "河南坠子", "湖北小曲", "四川清音", "苏州评弹", "扬州评话", "福州评话", "绍兴平湖调", "四明南词", "温州鼓词", "山东快书", "天津快板", "陕西快板", "甘肃快板", "青海平弦", "宁夏小曲", "兰州鼓子", "新疆曲子", "西藏折嘎", "广西文场", "云南扬琴", "贵州文琴", "四川扬琴", "四川清音", "四川竹琴", "四川金钱板", "四川花鼓", "四川莲花落", "四川清音", "四川竹琴", "四川金钱板", "四川评书", "四川谐剧", "四川相书", "四川盘子", "四川车灯", "四川连萧", "四川清音", "四川扬琴", "四川竹琴", "四川金钱板", "四川评书", "四川谐剧", "四川相书", "四川盘子", "四川车灯", "四川连萧"],
+      "建筑家具": ["配件", "规格齐全", "名牌", "花色繁多，种类齐全", "饰", "遮阳帘", "地面建筑物", "桥台，拱座", "邻接房屋", "研究院", "叶形装饰", "过道", "居住设施", "隔音板", "广告气球", "残象", "气床", "便利设施", "古式家具", "造型优美", "接待室", "日光浴室", "日光浴室", "狩猎屋", "狩猎小屋", "狩猎山舍", "海滩屋", "海滩棚屋", "贝尔", "看门人", "门房", "敞开的", "露天运动场", "未铺砌的", "机场", "空中走廊", "小教堂", "寺庙", "修道院", "清真寺", "犹太教堂", "教堂", "大教堂", "礼拜堂", "神殿", "圣所", "祭坛", "神龛", "陵墓", "坟墓", "大坟", "金字塔", "宝塔", "塔", "钟楼", "尖塔", "圆屋顶", "穹顶", "拱顶", "拱门", "柱子", "圆柱", "柱廊", "门廊", "阳台", "露台", "平台", "屋顶", "屋檐", "檐口", "山墙", "老虎窗", "天窗", "烟囱", "壁炉", "炉床", "壁炉架", "烟道", "通风口", "排气扇", "空调", "暖气", "散热器", "管道", "水管", "电线", "线路", "开关", "插座", "灯", "灯具", "吊灯", "壁灯", "台灯", "落地灯", "射灯", "聚光灯", "灯泡", "灯管", "LED灯", "节能灯", "荧光灯", "白炽灯", "卤素灯", "霓虹灯", "路灯", "街灯", "景观灯", "园林灯", "草坪灯", "地灯", "水下灯", "泳池灯", "太阳能灯", "应急灯", "手电筒", "灯笼", "烛台", "蜡烛", "香", "熏香", "香水", "香薰", "精油", "精油灯", "扩香器", "香薰炉", "香薰蜡烛", "香薰石", "香薰木", "香薰花", "香薰包", "香薰枕", "香薰眼罩", "香薰面膜", "香薰浴盐", "香薰沐浴露", "香薰洗发水", "香薰护发素", "香薰沐浴球", "香薰泡泡浴", "香薰牛奶浴", "香薰花瓣浴", "香薰药浴", "香薰足浴", "香薰手浴", "香薰桑拿", "香薰蒸汽浴", "香薰汗蒸", "香薰瑜伽", "香薰冥想", "香薰按摩", "香薰理疗", "香薰疗法", "芳香疗法", "芳香植物", "芳香花园", "芳香草药", "芳香精油", "芳香蜡烛", "芳香疗法师", "芳香咨询师", "芳香治疗师", "芳香营养师", "芳香美容师", "芳香护理师", "芳香设计师", "芳香培训师", "芳香水", "芳香喷雾", "芳香湿巾", "芳香纸巾", "芳香卫生巾", "芳香尿布", "芳香垃圾袋", "芳香冰箱除味剂", "芳香鞋垫", "芳香鞋塞", "芳香鞋粉", "芳香洗衣液", "芳香柔顺剂", "芳香衣物护理剂", "芳香汽车香氛", "芳香室内香氛", "芳香宠物除臭剂", "芳香厕所除臭剂", "芳香厨房除臭剂", "芳香冰箱除臭剂", "芳香鞋柜除臭剂", "芳香衣柜除臭剂", "芳香抽屉除臭剂", "芳香书柜除臭剂", "芳香汽车除臭剂", "芳香办公室除臭剂", "芳香酒店除臭剂", "芳香医院除臭剂", "芳香学校除臭剂", "芳香商场除臭剂", "芳香餐厅除臭剂", "芳香咖啡厅除臭剂", "芳香茶馆除臭剂", "芳香酒吧除臭剂", "芳香KTV除臭剂", "芳香网吧除臭剂", "芳香健身房除臭剂", "芳香瑜伽馆除臭剂", "芳香美容院除臭剂", "芳香理发店除臭剂", "芳香足浴店除臭剂", "芳香桑拿房除臭剂", "芳香汗蒸房除臭剂", "芳香温泉除臭剂", "芳香游泳馆除臭剂", "芳香更衣室除臭剂", "芳香卫生间除臭剂", "芳香垃圾桶除臭剂", "芳香垃圾站除臭剂", "芳香垃圾车除臭剂", "芳香垃圾场除臭剂", "芳香污水处理厂除臭剂", "芳香化工厂除臭剂", "芳香造纸厂除臭剂", "芳香制药厂除臭剂", "芳香食品厂除臭剂", "芳香屠宰场除臭剂", "芳香养殖场除臭剂", "芳香动物园除臭剂", "芳香宠物店除臭剂", "芳香宠物医院除臭剂", "芳香宠物美容院除臭剂", "芳香宠物寄养所除臭剂", "芳香宠物墓地除臭剂", "芳香宠物火化场除臭剂"],
+      "服装类型": ["官方", "在线商店", "精选店", "畅销品", "折扣季", "促销", "必备品", "主打款", "广告款", "新品", "热门", "秋冬", "春夏", "时装秀", "猫步", "伸展台", "模特", "直播", "展示", "特辑", "期刊", "独家", "限量", "限量版", "珍藏版", "纪念版", "特别版", "典藏版", "豪华版", "标准版", "基础版", "入门版", "专业版", "旗舰版", "至尊版", "豪华套装", "标准套装", "基础套装", "入门套装", "专业套装", "旗舰套装", "至尊套装"],
+      "布料材质": ["棉", "麻", "大麻", "黄麻", "纸沙草纤维", "羊毛", "羊绒 / 克什米尔", "蚕丝", "蚕丝", "羊驼毛", "纱", "碳纤维", "金属纱", "尼龙", "聚酯纤维, 涤纶", "压克力纱", "人造棉 人造丝", "弹力纤维", "莫代尔", "莱卡", "蕾丝", "雪纺", "牛仔布", "皮革", "毛皮", "羽毛", "皮草", "人造毛皮", "人造皮革", "合成革", "聚氨酯", "PVC", "橡胶", "乳胶", "硅胶", "塑料", "金属", "链条", "亮片", "珠子", "水晶", "宝石", "刺绣", "贴花", "印花", "染色", "扎染", "蜡染", " tie-dye", "ombre", "渐变", "涂层", "覆膜", "防水", "防污", "防皱", "防缩水", "防静电", "防紫外线", "抗菌", "防臭", "透气", "吸湿", "排汗", "保暖", "凉爽", "弹性", "紧身", "宽松", "超轻", "超薄", "超细", "超柔", "超强", "耐磨", "耐穿", "耐用", "环保", "有机", "天然", "再生", "回收", "可降解", "可生物降解", "可回收", "可持续", "道德采购", "公平贸易", "无残忍", "素食", "纯素", "无动物成分"],
+      "剪裁工艺": ["廊形", "裁剪", "曲线", "破洞", "手工", "缝纫", "染色", "印花", "刺绣", "贴花", "镶边", "滚边", "包边", "折边", "卷边", "锁边", "缉明线", "打褶", "褶裥", "皱褶", "荷叶边", "波浪边", "花边", "蕾丝边", "流苏", "穗子", "缨带", "丝带", "蝴蝶结", "腰带", "腰封", "束腰", "腰带扣", "皮带扣", "挂钩", "扣子", "纽扣", "拉链", "魔术贴", "绑带", "系带", "结绳", "按扣", "揿扣", "子母扣", "铆钉", " studs", "珠子", "亮片", "水钻", "水晶", "宝石", "刺绣", "贴花", "印花", "蜡染", "扎染", " tie-dye", "渐变", "ombre", "涂层", "覆膜", "防水处理", "防污处理", "防皱处理", "防缩水处理", "防静电处理", "防紫外线处理", "抗菌处理", "防臭处理", "透气处理", "吸湿处理", "排汗处理", "保暖处理", "凉爽处理", "弹性处理"],
+      "风格潮流": ["碎花", "豹纹", "民族风", "头", "高街", "重金属", "甜美", "果色", "撞色", "裸色", "大地色", "优雅", "复古", "经典", "现代", "传统", "基本", "街头", "运动", "休闲", "正式", "商务", "礼服", "晚装", "度假", "海滩", "乡村", "田园", "波西米亚", "哥特", "朋克", "摇滚", "嘻哈", "学院", "文艺", "森系", "清新", "甜美", "可爱", "性感", "成熟", "优雅", "知性", "简约", "极简", "奢华", "高档", "平价", "实惠", "经济", "大众", "小众", "定制", "量身定做", "高级定制", "半定制", "成衣", " ready-to-wear", "快时尚", "慢时尚", "可持续时尚", "环保时尚", "道德时尚", "公平贸易时尚", "素食时尚", "纯素时尚", "无残忍时尚", "有机时尚", "天然时尚", "再生时尚", "回收时尚", "升级再造时尚", "复古时尚", "二手时尚", "古着时尚", "租赁时尚", "共享时尚", "订阅时尚"],
+      "版型设计": ["版型", "标准版型", "宽松版型", "紧身版型", "贴身版型", "超贴身"],
+      "大类品类": ["上装", "下装", "外套", "裙装", "配饰"],
+      "上装品类": ["针织衫", "套头衫/卫衣", "马甲/背心", "T恤", "衬衫", "胸衣", "运动上装/长款上装"],
+      "下装品类": ["休闲裤", "短裤", "哈伦裤", "牛仔裤", "打底裤/袜裤", "热裤", "锥形裤", "阔腿裤", "五分七分九分裤", "喇叭裤"],
+      "外套品类": ["西装", "夹克", "卫衣", "开衫", "棉服", "大衣", "风衣", "半身羽绒服", "长羽绒服", "商务套装", "马甲", "披风"],
+      "裙装品类": ["连衣裙", "半身裙", "礼服裙", "吊带裙", "迷你裙", "半身长裙"],
+      "配饰品类": ["包", "钱包/手包", "项链", "耳", "手表", "手链", "围巾", "帽子/礼帽", "手套", "高跟鞋", "长筒袜", "鞋", "靴子", "板鞋", "太阳帽", "领结", "肩章", "腰带", "领带"],
+      "面料领型": ["牛仔", "皮装", "羊毛", "棉", "皮草", "丝 麻", "尼龙", "皮", "雪纺", "梭织", "圆领", "V领", "长袖", "短袖", "耸肩"]
+    };
+
+    // 类别图标映射
+    const categoryIcons = {
+      "图片质量": "📷", "艺术风格": "🎨", "灯光效果": "💡", "色调调性": "🌈",
+      "自然现象": "🌦️", "视角构图": "📐", "材质质感": "🪟", "场景描述": "🏞️",
+      "其他形容词": "✨", "珠宝专题": "💎", "动漫漫画": "🎌", "科幻专题": "🚀",
+      "画风流派": "🖼️", "镜头类型": "📹", "人物镜头": "👤",
+      "中国神兽": "🐉", "十二生肖": "🐲", "传统节日": "🎊", "传统饮食": "🍜", "中国文化": "🎭",
+      "建筑家具": "🏗️",
+      "服装类型": "👔", "布料材质": "🧵", "剪裁工艺": "✂️", "风格潮流": "👠",
+      "版型设计": "📏", "大类品类": "👚", "上装品类": "👕", "下装品类": "👖",
+      "外套品类": "🧥", "裙装品类": "👗", "配饰品类": "🎒", "面料领型": "📐"
+    };
+
+    // 风格模板
+    const templates = {
+      ink: ["水墨画", "中国国画", "龙", "书法", "留白", "优雅", "4K高清", "柔和灯光"],
+      festival: ["春节", "红灯笼", "喜庆", "传统节日", "剪纸", "中国结", "热烈", "8K画质"],
+      beauty: ["汉服", "古风美人", "优雅", "精致", "中国传统绘画", "温婉", "超写实", "柔和"],
+      modern: ["极简", "纯色", "高级", "干净", "现代风格", "简约", "4K高清", "自然光"],
+      anime: ["吉卜力风格", "动漫", "清新", "蓝天白云", "日系风格", "可爱", "明亮的色彩", "梦工厂动画风格"],
+      cyber: ["赛博朋克", "霓虹灯", "未来感", "高对比", "紫色", "科幻", "OC渲染器", "夜景"]
+    };
+
+    // ========== 全局变量 ==========
+    let currentPrompt = [];
+    let currentFontSize = 'medium';
+    let selectedKeywords = new Set();
+
+    // ========== DOM 元素 ==========
+    const categoriesGrid = document.getElementById('categoriesGrid');
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const keywordsGrid = document.getElementById('keywordsGrid');
+    const promptContent = document.getElementById('promptContent');
+    const templateSelect = document.getElementById('templateSelect');
+    const selectedCount = document.getElementById('selectedCount');
+
+    // ========== 注册 Service Worker ==========
+    function registerServiceWorker() {
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./service-worker.js')
+            .then(registration => {
+              console.log('[PWA] Service Worker 注册成功:', registration.scope);
+
+              // 监听更新
+              registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                newWorker.addEventListener('statechange', () => {
+                  if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // 有新版本可用
+                    if (confirm('发现新版本，是否立即更新？')) {
+                      newWorker.postMessage({ action: 'skipWaiting' });
+                      window.location.reload();
+                    }
+                  }
+                });
+              });
+            })
+            .catch(error => {
+              console.log('[PWA] Service Worker 注册失败:', error);
+            });
+        });
+      }
+    }
+
+    // ========== iOS 添加到主屏幕提示 ==========
+    function showInstallPrompt() {
+      // 检测是否在iOS Safari中
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
+
+      if (isIOS && !isInStandaloneMode) {
+        // 检查是否已经提示过
+        const hasShownPrompt = localStorage.getItem('installPromptShown');
+        if (!hasShownPrompt) {
+          setTimeout(() => {
+            const shouldShow = confirm('💡 使用提示：\n\n点击底部的"分享"按钮，然后选择"添加到主屏幕"，即可像原生App一样使用！\n\n不再显示此提示？');
+            if (shouldShow) {
+              localStorage.setItem('installPromptShown', 'true');
+            }
+          }, 2000);
+        }
+      }
+    }
+
+    // ========== 初始化 ==========
+    function init() {
+      registerServiceWorker();
+      renderCategories();
+      loadFontSize();
+      bindEvents();
+      showInstallPrompt();
+    }
+
+    // ========== 渲染类别卡片 ==========
+    function renderCategories() {
+      const categories = Object.keys(categoriesData);
+      categoriesGrid.innerHTML = '';
+
+      categories.forEach(category => {
+        const icon = categoryIcons[category] || '📁';
+        const count = categoriesData[category].length;
+
+        const card = document.createElement('div');
+        card.className = 'category-card';
+        card.innerHTML = `
+          <span class="category-icon">${icon}</span>
+          <div class="category-name">${category}</div>
+          <div class="category-count">${count}个关键词</div>
+        `;
+        card.addEventListener('click', () => openModal(category));
+        categoriesGrid.appendChild(card);
+      });
+    }
+
+    // ========== 打开弹出窗口 ==========
+    function openModal(category) {
+      modalTitle.innerHTML = `${categoryIcons[category] || '📁'} ${category}`;
+      keywordsGrid.innerHTML = '';
+
+      const keywords = categoriesData[category];
+      keywords.forEach(keyword => {
+        const item = document.createElement('div');
+        item.className = 'keyword-item';
+        item.textContent = keyword;
+        item.addEventListener('click', () => toggleKeyword(item, keyword));
+        keywordsGrid.appendChild(item);
+      });
+
+      selectedKeywords.clear();
+      updateSelectedCount();
+      modal.classList.add('active');
+    }
+
+    // ========== 关闭弹出窗口 ==========
+    function closeModal() {
+      modal.classList.remove('active');
+    }
+
+    // ========== 切换关键词选择 ==========
+    function toggleKeyword(element, keyword) {
+      if (selectedKeywords.has(keyword)) {
+        selectedKeywords.delete(keyword);
+        element.classList.remove('selected');
+      } else {
+        selectedKeywords.add(keyword);
+        element.classList.add('selected');
+      }
+      updateSelectedCount();
+    }
+
+    // ========== 更新已选择数量 ==========
+    function updateSelectedCount() {
+      selectedCount.textContent = `已选择 ${selectedKeywords.size} 个`;
+    }
+
+    // ========== 添加到提示词 ==========
+    function addToPrompt() {
+      selectedKeywords.forEach(keyword => {
+        if (!currentPrompt.includes(keyword)) {
+          currentPrompt.push(keyword);
+        }
+      });
+      updatePromptDisplay();
+      closeModal();
+    }
+
+    // ========== 全选 ==========
+    function selectAll() {
+      const items = keywordsGrid.querySelectorAll('.keyword-item');
+      items.forEach(item => {
+        if (!selectedKeywords.has(item.textContent)) {
+          selectedKeywords.add(item.textContent);
+          item.classList.add('selected');
+        }
+      });
+      updateSelectedCount();
+    }
+
+    // ========== 更新提示词显示 ==========
+    function updatePromptDisplay() {
+      if (currentPrompt.length === 0) {
+        promptContent.textContent = '点击下方卡片选择关键词，或使用风格模板快速生成...';
+        promptContent.classList.add('empty');
+      } else {
+        promptContent.textContent = currentPrompt.join('，');
+        promptContent.classList.remove('empty');
+      }
+    }
+
+    // ========== 应用风格模板 ==========
+    function applyTemplate(templateKey) {
+      if (!templateKey || !templates[templateKey]) return;
+
+      currentPrompt = [...templates[templateKey]];
+      updatePromptDisplay();
+    }
+
+    // ========== 随机生成 ==========
+    function randomPrompt() {
+      currentPrompt = [];
+      const categories = Object.keys(categoriesData);
+
+      // 从每个类别随机选择1-2个关键词
+      categories.forEach(category => {
+        const keywords = categoriesData[category];
+        const count = Math.random() < 0.5 ? 1 : 2;
+        for (let i = 0; i < count; i++) {
+          const randomIndex = Math.floor(Math.random() * keywords.length);
+          const keyword = keywords[randomIndex];
+          if (!currentPrompt.includes(keyword)) {
+            currentPrompt.push(keyword);
+          }
+        }
+      });
+
+      // 打乱顺序
+      currentPrompt = currentPrompt.sort(() => Math.random() - 0.5);
+      updatePromptDisplay();
+    }
+
+    // ========== 清空提示词 ==========
+    function clearPrompt() {
+      currentPrompt = [];
+      updatePromptDisplay();
+    }
+
+    // ========== 复制到剪贴板 ==========
+    function copyToClipboard() {
+      if (currentPrompt.length === 0) {
+        alert('请先选择或生成提示词！');
+        return;
+      }
+
+      const text = currentPrompt.join('，');
+      navigator.clipboard.writeText(text).then(() => {
+        showToast();
+      }).catch(() => {
+        // 降级方案
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        showToast();
+      });
+    }
+
+    // ========== 显示复制成功提示 ==========
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+
+    // ========== 字号调节 ==========
+    function setFontSize(size) {
+      currentFontSize = size;
+      document.body.style.fontSize = `var(--font-${size})`;
+      localStorage.setItem('fontSize', size);
+
+      // 更新按钮状态
+      document.querySelectorAll('.font-size-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.size === size);
+      });
+    }
+
+    // ========== 加载字号设置 ==========
+    function loadFontSize() {
+      const savedSize = localStorage.getItem('fontSize') || 'medium';
+      setFontSize(savedSize);
+    }
+
+    // ========== 绑定事件 ==========
+    function bindEvents() {
+      // 关闭弹窗
+      document.getElementById('modalClose').addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // 添加到提示词
+      document.getElementById('addToPromptBtn').addEventListener('click', addToPrompt);
+
+      // 全选
+      document.getElementById('selectAllBtn').addEventListener('click', selectAll);
+
+      // 风格模板
+      templateSelect.addEventListener('change', (e) => {
+        applyTemplate(e.target.value);
+        e.target.value = ''; // 重置选择
+      });
+
+      // 随机生成
+      document.getElementById('randomBtn').addEventListener('click', randomPrompt);
+
+      // 清空
+      document.getElementById('clearBtn').addEventListener('click', clearPrompt);
+
+      // 复制
+      document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+
+      // 字号调节
+      document.querySelectorAll('.font-size-btn').forEach(btn => {
+        btn.addEventListener('click', () => setFontSize(btn.dataset.size));
+      });
+
+      // ESC 关闭弹窗
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+      });
+    }
+
+    // ========== 启动 ==========
+    init();
+  </script>
+</body>
+</html>

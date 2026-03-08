@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gitee Pages 快速启用</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #FAF8F3 0%, #F5F2ED 100%);
+      padding: 30px 20px;
+      line-height: 1.6;
+    }
+    .container { max-width: 650px; margin: 0 auto; }
+    h1 {
+      color: #C71D23;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.8em;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .big-btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, #C71D23 0%, #A01820 100%);
+      color: white;
+      padding: 25px;
+      border: none;
+      border-radius: 20px;
+      font-size: 1.5em;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0 8px 30px rgba(199, 29, 35, 0.3);
+      margin: 20px 0;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .big-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(199, 29, 35, 0.4);
+    }
+    .box {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 25px;
+    }
+    .step-num {
+      width: 45px;
+      height: 45px;
+      background: #C71D23;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3em;
+      font-weight: bold;
+      flex-shrink: 0;
+      margin-right: 15px;
+    }
+    .step-content h3 {
+      color: #2C4C6E;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+    }
+    .highlight {
+      background: #FFF3CD;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .visual-box {
+      background: #F0F4F8;
+      border: 2px dashed #2C4C6E;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 15px 0;
+      text-align: center;
+    }
+    .visual-box .icon {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+    .visual-box .text {
+      color: #2C4C6E;
+      font-weight: 500;
+    }
+    .arrow {
+      text-align: center;
+      font-size: 2.5em;
+      color: #C71D23;
+      margin: -10px 0;
+    }
+    .success {
+      background: linear-gradient(135deg, #D4EDDA 0%, #C3E6CB 100%);
+      border-left: 5px solid #6B9B4A;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+    .success h3 {
+      color: #6B9B4A;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+    .url-box {
+      background: #2C4C6E;
+      color: #f8f8f2;
+      padding: 18px;
+      border-radius: 10px;
+      font-family: monospace;
+      text-align: center;
+      font-size: 1.1em;
+      margin: 15px 0;
+      word-break: break-all;
+    }
+    .menu-demo {
+      background: #FAFAFA;
+      border: 1px solid #E0E0E0;
+      border-radius: 10px;
+      padding: 15px;
+      margin: 15px 0;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+    .menu-item {
+      padding: 8px 12px;
+      margin: 4px 0;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .menu-item:hover {
+      background: #E8F4FD;
+    }
+    .menu-item.active {
+      background: #C71D23;
+      color: white;
+    }
+    .menu-item .arrow {
+      display: inline-block;
+      font-size: 0.8em;
+      margin: 0 5px;
+      color: #999;
+    }
+    .notice {
+      background: #E8F4FD;
+      border-left: 4px solid #2C4C6E;
+      padding: 18px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab {
+      flex: 1;
+      padding: 15px;
+      background: #E0E0E0;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .tab.active {
+      background: #C71D23;
+      color: white;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 启用 Gitee Pages</h1>
+    <p class="subtitle">让家人在国内快速访问</p>
+
+    <div class="notice">
+      <strong>📌 最简单方法</strong>：直接点击下方按钮跳转到 Gitee Pages 页面
+    </div>
+
+    <a href="https://gitee.com/yxli891230/ai-keywords-app/pages" target="_blank" class="big-btn">
+      直接打开 Gitee Pages →
+    </a>
+
+    <div class="box">
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab(0)">找不到按钮？</button>
+        <button class="tab" onclick="switchTab(1)">如何配置</button>
+        <button class="tab" onclick="switchTab(2)">完成后</button>
+      </div>
+
+      <div class="tab-content active">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>在仓库主页找这些位置</h3>
+            <p>Gitee 界面可能更新，请尝试：</p>
+            <div class="visual-box">
+              <div class="icon">🔍</div>
+              <div class="text">
+                <strong>顶部导航栏</strong> - 寻找「服务」「Pages」「Gitee Pages」标签
+              </div>
+            </div>
+            <div class="visual-box">
+              <div class="icon">📋</div>
+              <div class="text">
+                <strong>左侧菜单</strong> - 向下滚动找「Gitee Pages」
+              </div>
+            </div>
+            <div class="visual-box">
+              <div class="icon">⋯</div>
+              <div class="text">
+                <strong>右上角</strong> - 点击「...」或「更多」菜单
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>或者直接访问链接</h3>
+            <div class="menu-demo">
+              <div class="menu-item">
+                <span class="arrow">→</span>
+                https://gitee.com/yxli891230/ai-keywords-app/pages
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>选择部署分支</h3>
+            <p>选择 <span class="highlight">main</span> 分支</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>选择部署目录</h3>
+            <p>选择 <span class="highlight">根目录</span>（或留空）</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>点击启动按钮</h3>
+            <p>点击 <span class="highlight">「启动」</span> 或 <span class="highlight">「更新」</span> 按钮</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>等待部署</h3>
+            <p>等待 30秒 - 1分钟，状态变为 <span style="color: #6B9B4A;">● 已启动</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content">
+        <div class="success">
+          <h3>✅ 启用成功！</h3>
+          <p>国内访问链接：</p>
+          <div class="url-box">
+            https://yxli891230.gitee.io/ai-keywords-app/
+          </div>
+          <p style="margin-top: 15px;">
+            <strong>🎉 现在可以通过微信分享给家人了！</strong>
+          </p>
+          <p style="margin-top: 10px; font-size: 0.9em; color: #666;">
+            发送方法：复制链接 → 微信发送 → 让家人在Safari中打开 →
+            分享按钮 → 添加到主屏幕
+          </p>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+          <a href="https://yxli891230.gitee.io/ai-keywords-app/" target="_blank" class="big-btn" style="padding: 18px; font-size: 1.2em;">
+            测试访问 →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(index) {
+      const tabs = document.querySelectorAll('.tab');
+      const contents = document.querySelectorAll('.tab-content');
+      tabs.forEach((tab, i) => {
+        tab.classList.toggle('active', i === index);
+        contents[i].classList.toggle('active', i === index);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>部署到Gitee Pages</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #FAF8F3 0%, #F5F2ED 100%);
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    .container { max-width: 700px; margin: 0 auto; }
+    h1 {
+      color: #C71D23;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .notice {
+      background: #E8F4FD;
+      border-left: 4px solid #2C4C6E;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .step {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+    .step-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      color: #2C4C6E;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background: #C71D23;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-weight: bold;
+    }
+    .code {
+      background: #f5f5f5;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      margin: 10px 0;
+    }
+    .arrow {
+      text-align: center;
+      font-size: 2em;
+      color: #C71D23;
+      margin: -10px 0;
+    }
+    .btn {
+      display: inline-block;
+      background: #C71D23;
+      color: white;
+      padding: 15px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1.1em;
+    }
+    .btn:hover { background: #A01820; }
+    .success {
+      background: #D4EDDA;
+      border-left: 4px solid #6B9B4A;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .highlight {
+      background: #FFF3CD;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      margin: 10px 0;
+    }
+    input:focus {
+      outline: none;
+      border-color: #C71D23;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🇨🇳 部署到 Gitee Pages</h1>
+    <p class="subtitle">国内直连访问，无需 VPN</p>
+
+    <div class="notice">
+      <strong>💡 为什么选择 Gitee？</strong>
+      <ul style="margin: 10px 0 10px 20px;">
+        <li>✅ 国内访问速度极快</li>
+        <li>✅ 无需 VPN 即可访问</li>
+        <li>✅ 完全免费使用</li>
+        <li>✅ 支持自定义域名</li>
+      </ul>
+    </div>
+
+    <div class="step">
+      <div class="step-title">
+        <span class="step-number">1</span>
+        创建 Gitee 仓库
+      </div>
+      <p>📍 打开 Gitee 创建页面：</p>
+      <div style="text-align: center; margin: 15px 0;">
+        <a href="https://gitee.com/projects/new" target="_blank" class="btn">打开创建页面 →</a>
+      </div>
+      <p style="margin-top: 15px;">📍 填写仓库信息：</p>
+      <ul style="margin: 10px 0 10px 20px;">
+        <li><strong>仓库名称</strong>: <code>ai-keywords-app</code></li>
+        <li><strong>仓库介绍</strong>: <code>AI绘画关键词宝库</code></li>
+        <li><strong>是否公开</strong>: 选择 <strong>公开</strong></li>
+        <li><strong>初始化仓库</strong>: 不要勾选任何选项</li>
+      </ul>
+      <p style="margin-top: 15px;">📍 点击 <strong>"创建"</strong> 按钮</p>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="step">
+      <div class="step-title">
+        <span class="step-number">2</span>
+        推送代码到 Gitee
+      </div>
+      <p>📍 在项目目录运行以下命令：</p>
+      <div class="code">
+        cd /d/claudecode/【问今AI】关键词宝藏库/AI关键词宝库PWA<br>
+        git remote add gitee https://gitee.com/你的用户名/ai-keywords-app.git<br>
+        git push -u gitee main
+      </div>
+      <p style="margin-top: 15px;">或直接在 Gitee 网页上传文件</p>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="step">
+      <div class="step-title">
+        <span class="step-number">3</span>
+        启用 Gitee Pages
+      </div>
+      <p>📍 进入仓库页面，点击 <strong>"服务"</strong> → <strong>"Gitee Pages"</strong></p>
+      <p style="margin-top: 10px;">📍 配置如下：</p>
+      <ul style="margin: 10px 0 10px 20px;">
+        <li><strong>部署分支</strong>: <code>main</code></li>
+        <li><strong>部署目录</strong>: <code>根目录</code></li>
+      </ul>
+      <p style="margin-top: 15px;">📍 点击 <strong>"启动"</strong> 或 <strong>"更新"</strong> 按钮</p>
+    </div>
+
+    <div class="arrow">⬇️</div>
+
+    <div class="step">
+      <div class="step-title">
+        <span class="step-number">4</span>
+        获取国内访问链接
+      </div>
+      <p>📍 等待部署完成后，你的国内访问链接为：</p>
+      <div class="code" style="text-align: center; font-size: 1.1em; margin-top: 15px;">
+        https://你的用户名.gitee.io/ai-keywords-app
+      </div>
+    </div>
+
+    <div class="success">
+      <h3 style="color: #6B9B4A;">✅ 完成！</h3>
+      <p><strong>现在家人在国内可以直接访问！</strong></p>
+      <p style="margin-top: 15px;">通过微信发送链接给家人：</p>
+      <div class="code" style="margin-top: 10px;">
+        🎨 AI绘画关键词宝库<br><br>
+        点击链接 → 在Safari中打开 →<br>
+        分享按钮 → 添加到主屏幕<br><br>
+        链接：https://你的用户名.gitee.io/ai-keywords-app
+      </div>
+    </div>
+  </div>
+</body>
+</html>

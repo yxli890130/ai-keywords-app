@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>自动创建 Gitee 仓库</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #FAF8F3 0%, #F5F2ED 100%);
+      padding: 40px 20px;
+      text-align: center;
+    }
+    .container { max-width: 500px; margin: 0 auto; }
+    h1 { color: #C71D23; margin-bottom: 20px; }
+    .box {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    }
+    .step {
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+      text-align: left;
+    }
+    .step-number {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background: #C71D23;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 30px;
+      margin-right: 10px;
+    }
+    .btn {
+      background: #C71D23;
+      color: white;
+      padding: 15px 40px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.2em;
+      cursor: pointer;
+      margin: 10px;
+    }
+    .btn:hover { background: #A01820; }
+    .btn-secondary {
+      background: #2C4C6E;
+    }
+    .btn-secondary:hover { background: #1A2C3E; }
+    .code {
+      background: #2C4C6E;
+      color: #f8f8f2;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      margin: 10px 0;
+    }
+    .success {
+      background: #D4EDDA;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 20px 0;
+    }
+    #status { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🇨🇳 创建 Gitee 仓库</h1>
+
+    <div class="box">
+      <div class="step">
+        <span class="step-number">1</span>
+        <strong>点击下方按钮打开 Gitee 创建页面</strong>
+      </div>
+
+      <button class="btn" onclick="openGitee()">
+        打开 Gitee 创建页面
+      </button>
+
+      <div class="step">
+        <span class="step-number">2</span>
+        <strong>在打开的页面中填写：</strong>
+        <ul style="margin: 10px 0 10px 30px;">
+          <li>仓库名称：<code>ai-keywords-app</code></li>
+          <li>公开：✅ 选择公开</li>
+          <li>其他：保持默认</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="step-number">3</span>
+        <strong>点击"创建"按钮</strong>
+      </div>
+
+      <div class="step">
+        <span class="step-number">4</span>
+        <strong>创建完成后，点击下方按钮</strong>
+        <br><br>
+        <button class="btn btn-secondary" onclick="deployToGitee()">
+          部署代码并启用 Pages →
+        </button>
+      </div>
+    </div>
+
+    <div id="status">
+      <div class="success" id="statusContent"></div>
+    </div>
+  </div>
+
+  <script>
+    function openGitee() {
+      window.open('https://gitee.com/projects/new', '_blank');
+    }
+
+    function deployToGitee() {
+      const statusDiv = document.getElementById('status');
+      const statusContent = document.getElementById('statusContent');
+      statusDiv.style.display = 'block';
+
+      statusContent.innerHTML = `
+        <h3>✅ 请确认以下操作已完成：</h3>
+        <ol style="margin: 15px 0 15px 30px;">
+          <li>已在 Gitee 创建仓库 <code>ai-keywords-app</code></li>
+          <li>仓库已设置为公开</li>
+        </ol>
+        <p style="margin-top: 15px;"><strong>现在在命令行运行：</strong></p>
+        <div class="code">
+          cd /d/claudecode/【问今AI】关键词宝藏库/AI关键词宝库PWA<br>
+          git push -u gitee main
+        </div>
+        <p style="margin-top: 15px;">或者直接点击下方按钮：</p>
+        <button class="btn btn-secondary" onclick="window.open('https://gitee.com/yxli891230/ai-keywords-app/upload', '_blank')">
+          去上传文件 →
+        </button>
+      `;
+    }
+  </script>
+</body>
+</html>
